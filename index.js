@@ -6,7 +6,7 @@ const app = express()
 const port = 3000
 
 app.use('/main', router);
-app.use('/', router);
+// app.use('/', router);
 
 
 

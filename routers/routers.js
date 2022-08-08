@@ -2,9 +2,9 @@ const express = require('express')
 const Models = require('../models/models')
 const router = express.Router()
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
    res.send('Hello kunminttt!')
-   next()
+   
   })
 
 router.get('/main', (req,res) => {
