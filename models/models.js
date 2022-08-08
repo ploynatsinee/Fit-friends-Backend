@@ -4,3 +4,5 @@
 
 //2. สร้าง model (class)
 // example const student = mongoose.model('Student', studentschma) แล้วใส่ func run (async,awiat, savedata, .then)
+
+//ถ้าจะส่ง date ผ่าน api ต้องแปลงเป็น string
