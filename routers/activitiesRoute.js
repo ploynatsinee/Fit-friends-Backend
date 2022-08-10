@@ -6,28 +6,28 @@ const Activities = require("../models/activitiesModels");
 
 // const activitiesController = require("../controllers/activitiesController");
 
-activityRoutes.param("activity_id", async (req, res, next, activity_id) => {
-  const activity = await Activities.findOne({
-    activity_id: activity_id,
-  });
+// activityRoutes.param("activity_id", async (req, res, next, activity_id) => {
+//   const activity = await Activities.findOne({
+//     activity_id: activity_id,
+//   });
 
-  if (!activity) {
-    return res.status(404).send();
-  }
+//   if (!activity) {
+//     return res.status(404).send();
+//   }
 
-  req.activity = activity;
+//   req.activity = activity;
 
-  next();
-});
+//   next();
+// });
 
-activityRoutes.get("/", activitiesController.getAllActivities);
+// activityRoutes.get("/", activitiesController.getAllActivities);
 
-activityRoutes.get("/:activity_id", activitiesController.getActivityById);
+// activityRoutes.get("/:activity_id", activitiesController.getActivityById);
 
-activityRoutes.post("/", activitiesController.createActivity);
+// activityRoutes.post("/", activitiesController.createActivity);
 
-activityRoutes.put("/:activity_id", activitiesController.editActivityById);
+// activityRoutes.put("/:activity_id", activitiesController.editActivityById);
 
-activityRoutes.delete("/:activity_id", activitiesController.removeActivityById);
+// activityRoutes.delete("/:activity_id", activitiesController.removeActivityById);
 
 module.exports = activityRoutes;

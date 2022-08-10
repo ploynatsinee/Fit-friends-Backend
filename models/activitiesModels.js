@@ -14,11 +14,11 @@ const activitiesSchema = new mongoose.Schema({
     required: true,
   },
   time_start: {
-    type: String,
+    type: Date,
     required: true,
   },
   time_end: {
-    type: String, 
+    type: Date, 
     required: true,
   },
   location: {
