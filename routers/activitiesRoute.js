@@ -1,33 +1,43 @@
 const express = require("express");
-
 const activityRoutes = express.Router();
+const ActivityModel = require("../models/activitiesModels");
 
-const Activities = require("../models/activitiesModels");
+const router = express.Router();
 
-// const activitiesController = require("../controllers/activitiesController");
+router.get('/', async (req, res) => {
+  const activities = await ActivityModel.find();
+  res.send(activities.map((act) => act.toJSON()));
+});
 
-// activityRoutes.param("activity_id", async (req, res, next, activity_id) => {
-//   const activity = await Activities.findOne({
-//     activity_id: activity_id,
-//   });
+router.get('/:activityId', async (req, res) => {
+  console.log(req.params);
+  const activity = await ActivityModel.findById(req.params.activityId);
+  if (!activity) {
+    res.status(404).end();
+  }
+  res.json(activity.toJSON());
+});
 
-//   if (!activity) {
-//     return res.status(404).send();
-//   }
+router.post('/', async (req, res) => {
+  console.log('Body');
+  console.log(req.body);
+  const activity = new ActivityModel(req.body);
+  const validateResult = activity.validateSync();
+  if (validateResult) {
+    return res.status(400).send(validateResult);
+  }
+  await activity.save();
+  return res.send(activity.toJSON());
+});
 
-//   req.activity = activity;
+router.patch('/:activityId', (req, res) => {
+  res.send('update');
+});
 
-//   next();
-// });
+router.delete('/:activityId', (req, res) => {
+  res.send('delete');
+});
 
-// activityRoutes.get("/", activitiesController.getAllActivities);
-
-// activityRoutes.get("/:activity_id", activitiesController.getActivityById);
-
-// activityRoutes.post("/", activitiesController.createActivity);
-
-// activityRoutes.put("/:activity_id", activitiesController.editActivityById);
-
-// activityRoutes.delete("/:activity_id", activitiesController.removeActivityById);
+module.exports = router;
 
 module.exports = activityRoutes;

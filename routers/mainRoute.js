@@ -1,6 +1,11 @@
 const express = require("express");
 const mainRoute = express.Router();
+const mainController = require("../controllers/mainControllers")
 
-//require mainrouteController
+//import model
+const ActivityModel = require("../models/activitiesModels");
+const User = require("../models/userModels");
 
-// mainRoute.get("/", mainrouteController.getallบลาๆๆๆ)
+mainRoute.get("/user", mainController.showUserOnline)
+
+module.exports = mainRoute;

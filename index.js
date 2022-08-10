@@ -10,27 +10,31 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 
-app.use(async (req, res, next) => {
-  try {
-    await mongoose.connect(process.env.MONGO_DB_URI);
-    next();
-  } catch (error) {
-    console.log(error);
-    res.status(500).send();
-  }
-});
+// app.use(async (req, res, next) => {
+//   try {
+//     await mongoose.connect(process.env.MONGO_DB_URI);
+//     next();
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send();
+//   }
+// });
 
 app.get("/", (req, res, next) => {
   res.send("test");
 });
 
-// /activities
-// const activityRoutes = require("./routes/activitiesRoute");
-// app.use("/activities", activityRoutes);
+//activities
+const activityRoutes = require("./routers/activitiesRoute");
+app.use("/activities", activityRoutes);
 
-// // /users
-// const userRoutes = require("./routes/userRoute");
-// app.use("/users", userRoutes);
+// /users
+const userRoutes = require("./routers/userRoute");
+app.use("/users", userRoutes);
+
+//main
+const mainRoute = require("./routers/mainRoute");
+app.use("/main", mainRoute)
 
 const PORT = process.env.PORT || 3000;
 
