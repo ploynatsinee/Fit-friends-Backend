@@ -1,16 +1,17 @@
 const express = require("express");
-const activityRoutes = express.Router();
 const ActivityModel = require("../models/activitiesModels");
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+  res.send('Hi')
   const activities = await ActivityModel.find();
   res.send(activities.map((act) => act.toJSON()));
 });
 
 router.get('/:activityId', async (req, res) => {
   console.log(req.params);
+  
   const activity = await ActivityModel.findById(req.params.activityId);
   if (!activity) {
     res.status(404).end();
@@ -39,5 +40,3 @@ router.delete('/:activityId', (req, res) => {
 });
 
 module.exports = router;
-
-module.exports = activityRoutes;
