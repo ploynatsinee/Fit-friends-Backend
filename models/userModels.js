@@ -32,7 +32,11 @@ const userSchema = new mongoose.Schema({
   user_photo: {
     type: String,
     required: true,
-  }
+  },
+  activity_id: {
+    type: String,
+    required: true,
+  },
 });
 
 const userModels = new mongoose.model("User", userSchema);
