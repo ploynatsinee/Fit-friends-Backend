@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const activitiesModels = require("./activitiesModels")
 
 const userSchema = new mongoose.Schema({
   user_id: {
@@ -36,7 +37,8 @@ const userSchema = new mongoose.Schema({
   user_photo: {
     type: String,
     required: true,
-  }
+  },
+
 });
 
 const userModels = new mongoose.model("User", userSchema);

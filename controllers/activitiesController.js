@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const getAllActivities = async (req, res, next) => {
   const activities = await Activities.find({
-    user_id: "291e7fa0-6c5b-4568-b570-3a71df030b1d",
+    // user_id: "291e7fa0-6c5b-4568-b570-3a71df030b1d",
   });
   res.send(activities);
 };
@@ -14,6 +14,7 @@ const getActivityById = async (req, res, next) => {
 };
 
 const User = require("../models/userModels");
+// const activitiesModels = require("../models/activitiesModels");
 
 //add filter and count
 const filterActivities = async (req, res, next) => {
@@ -21,7 +22,16 @@ const filterActivities = async (req, res, next) => {
 }
 
 const countActivities = async (req, res, next) => {
-  
+  const countNumber = await activitiesModels.aggregate([
+    //ทำให้แสดง noti ในวันเวลาที่กำหนด
+    { "$unwind": "$sport" },
+    {
+        "$group": {
+            "_id": t,
+            count: { $sum : 1 }
+        }
+    } 
+  ])
 }
 
 const createActivity = async (req, res, next) => {
@@ -43,10 +53,10 @@ const createActivity = async (req, res, next) => {
 };
 
 const editActivityById = async (req, res, next) => {
-  const { comment, activity_type, date, location } = req.body;
+  const { captions, sport, date, location } = req.body;
 
-  if (comment) req.activity.comment = comment;
-  if (activity_type) req.activity.activity_type = activity_type;
+  if (captions) req.activity.captions = captions;
+  if (sport) req.activity.sport = sport;
   if (date) req.activity.date = date;
   if (location) req.activity.location = location;
 
@@ -67,4 +77,6 @@ module.exports = {
   createActivity,
   editActivityById,
   removeActivityById,
+  filterActivities,
+  countActivities,
 };
