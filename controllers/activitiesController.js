@@ -15,6 +15,15 @@ const getActivityById = async (req, res, next) => {
 
 const User = require("../models/userModels");
 
+//add filter and count
+const filterActivities = async (req, res, next) => {
+
+}
+
+const countActivities = async (req, res, next) => {
+  
+}
+
 const createActivity = async (req, res, next) => {
   const user = await User.findOne({
     user_id: "2c8e29c4-21c8-4995-a189-1b23aef78928",
@@ -34,12 +43,12 @@ const createActivity = async (req, res, next) => {
 };
 
 const editActivityById = async (req, res, next) => {
-  const { comment, activity_type, date, duration } = req.body;
+  const { comment, activity_type, date, location } = req.body;
 
   if (comment) req.activity.comment = comment;
   if (activity_type) req.activity.activity_type = activity_type;
   if (date) req.activity.date = date;
-  if (duration) req.activity.duration = duration;
+  if (location) req.activity.location = location;
 
   await req.activity.save();
 

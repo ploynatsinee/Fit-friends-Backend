@@ -19,7 +19,18 @@ activityRoutes.param("activity_id", async (req, res, next, activity_id) => {
   next();
 });
 
+//show activity
 activityRoutes.get("/", activitiesController.getAllActivities);
+
+//ไปเขียนใน func ด้านบนได้มั้ยว่าให้เรียงวันเวลาหลังขึ้นก่อน
+//show activity community??? /activity?date-time 
+// activityRoutes.get("/activity?date-time", activitiesController.getAllActivities);
+
+//filter show activity community??? /activity?running&date-time
+activityRoutes.get("/activity?sport&date-time", activitiesController.filterActivities);
+
+//for notification aggergate (count) /activity_types/running/count
+activityRoutes.get("/activity_types/:sport/count", activitiesController.countActivities)
 
 activityRoutes.get("/:activity_id", activitiesController.getActivityById);
 
@@ -28,5 +39,8 @@ activityRoutes.post("/", activitiesController.createActivity);
 activityRoutes.put("/:activity_id", activitiesController.editActivityById);
 
 activityRoutes.delete("/:activity_id", activitiesController.removeActivityById);
+
+
+
 
 module.exports = activityRoutes;
