@@ -27,7 +27,7 @@ const countActivities = async (req, res, next) => {
     { "$unwind": "$sport" },
     {
         "$group": {
-            "_id": t,
+            "_id": type,
             count: { $sum : 1 }
         }
     } 
