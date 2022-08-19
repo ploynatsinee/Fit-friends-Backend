@@ -2,6 +2,13 @@ const express = require("express");
 const app = express();
 
 const bodyParser = require("body-parser");
+const cors = require('cors');
+
+const corsOptions = {
+    origin: '*',
+    credentials: true,
+  };
+app.use(cors(corsOptions))
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -12,7 +19,8 @@ const mongoose = require("mongoose");
 
 app.use(async (req, res, next) => {
   try {
-    await mongoose.connect(process.env.MONGO_DB_URI);
+    await mongoose.connect(process.env.MONGO_DB_URI,{dbName: "test"});
+    console.log("Connect to MongoDB");
     next();
   } catch (error) {
     console.log(error);
@@ -28,7 +36,7 @@ app.use("/activities", activityRoutes);
 const userRoutes = require("./routers/userRoute");
 app.use("/users", userRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = 8080;
 
 app.listen(PORT, () => {
   
