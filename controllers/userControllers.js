@@ -4,10 +4,12 @@ const { v4: uuidv4 } = require("uuid");
 
 const createUser = async (req, res, next) => {
   const newUser = new User({ user_id: uuidv4(), ...req.body });
-
-  await newUser.save();
-
-  res.send(newUser);
+  try {
+    await newUser.save();
+    res.send(newUser);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 };
 
 const getUserById = async (req, res, next) => {

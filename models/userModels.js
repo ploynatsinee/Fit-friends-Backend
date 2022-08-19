@@ -5,10 +5,10 @@ const userSchema = new mongoose.Schema({
   user_id: {
     type: String,
   },
-  activity_id: {
-    type: String,
-    required: true,
-  },
+  // activity_id: {
+  //   type: String,
+  //   required: true,
+  // },
   username: {
     required: true,
     type: String,

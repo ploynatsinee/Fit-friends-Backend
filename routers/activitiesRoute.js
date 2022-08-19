@@ -30,7 +30,7 @@ activityRoutes.get("/activity?date-time", activitiesController.getAllActivities)
 activityRoutes.get("/activity?sport&date-time", activitiesController.filterActivities);
 
 // //for notification aggergate (count) /activity_types/running/count
-activityRoutes.get("/activity_types/:sport/count", activitiesController.countActivities)
+activityRoutes.get("/activity_types/:sport", activitiesController.countActivities)
 
 activityRoutes.get("/:activity_id", activitiesController.getActivityById);
 

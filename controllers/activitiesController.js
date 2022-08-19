@@ -14,7 +14,7 @@ const getActivityById = async (req, res, next) => {
 };
 
 const User = require("../models/userModels");
-// const activitiesModels = require("../models/activitiesModels");
+const activitiesModels = require("../models/activitiesModels");
 
 //add filter and count
 const filterActivities = async (req, res, next) => {
@@ -22,16 +22,12 @@ const filterActivities = async (req, res, next) => {
 }
 
 const countActivities = async (req, res, next) => {
+  let date = new Date()
+  date.setDate(date.getDate() - 10)
   const countNumber = await activitiesModels.aggregate([
-    //ทำให้แสดง noti ในวันเวลาที่กำหนด
-    { "$unwind": "$sport" },
-    {
-        "$group": {
-            "_id": type,
-            count: { $sum : 1 }
-        }
-    } 
-  ])
+    ([{ "$match": { date: { "$gte": date } } }, { "$group": { "_id": "$sport", "count": { "$sum": 1 } } }])
+  ]);
+  res.send(countNumber);
 }
 
 const createActivity = async (req, res, next) => {
