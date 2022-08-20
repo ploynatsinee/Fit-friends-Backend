@@ -18,8 +18,22 @@ const activitiesModels = require("../models/activitiesModels");
 
 //add filter and count
 const filterActivities = async (req, res, next) => {
+  // let date = new Date()
+  // date.setDate(date.getDate() - 10)
+  // const filterSidebar = await activitiesModels.aggregate([
+  //   ([{ date: { "$eq": date } }] )
+  // ]);
+  // res.send(filterSidebar);
+  const isToday = (someDate) => {
+    const today = new Date()
+    return someDate.getDate() == today.getDate()
+  }
+  if(isToday) {
+    return res.send(req.activity);
+  }
+  
+} 
 
-}
 
 const countActivities = async (req, res, next) => {
   let date = new Date()
