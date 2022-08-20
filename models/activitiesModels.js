@@ -21,15 +21,15 @@ const activitiesSchema = new mongoose.Schema({
     required: true,
   },
   date_activites_start: {
-    type: Datetime,
+    type: Date,
     required: true,
   },
   date_activites_end: {
-    type: Datetime,
+    type: Date,
     required: true,
   },
   date_post: {
-    type: Datetime,
+    type: Date,
     required: true,
   },
   activites_photo: {
