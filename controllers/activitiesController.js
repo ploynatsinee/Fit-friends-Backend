@@ -23,15 +23,16 @@ const filterActivities = async (req, res, next) => {
   // const filterSidebar = await activitiesModels.aggregate([
   //   ([{ date: { "$eq": date } }] )
   // ]);
-  // res.send(filterSidebar);
-  const isToday = (someDate) => {
-    const today = new Date()
-    return someDate.getDate() == today.getDate()
-  }
-  if(isToday) {
-    return res.send(req.activity);
-  }
   
+  // res.send(filterSidebar);
+  // const isToday = (someDate) => {
+  //   const today = new Date()
+  //   return someDate.getDate() == today.getDate()
+  // }
+  // if(isToday) {
+    
+  // }
+  return res.send(req.activity);
 } 
 
 
