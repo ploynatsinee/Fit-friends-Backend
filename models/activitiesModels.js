@@ -12,7 +12,6 @@ const activitiesSchema = new mongoose.Schema({
   },
   sport: {
     required: true,
-    // enum: ['running','Jogging','Swimming','Yoga','Aerobic','Strength','Other'],
     type: String,
   }, 
   location: {
