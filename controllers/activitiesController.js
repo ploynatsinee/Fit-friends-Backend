@@ -3,8 +3,31 @@ const User = require("../models/userModels");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllActivities = async (req, res, next) => {
-  const activities = await Activities.find({});
-  res.send(activities);
+  console.log(req.query)
+  const dayPicker = req.query.date
+  console.log(dayPicker)
+  if (dayPicker === undefined) {
+    const activities = await Activities.find({});
+    res.send(activities);
+    
+  } else {
+    var dateEnd = new Date(dayPicker)
+    dateEnd.setHours(30, 59, 59)
+    console.log(dateEnd)
+    var dateStart = new Date(dayPicker)
+    console.log(dateStart)
+    const activities = await Activities.find({
+      $and:
+        [{
+          "date_post":
+            { $lt: (dateEnd) }
+        },
+        { "date_post": { $gt: (dateStart) } }]
+    });
+    res.send(activities);
+
+  }
+
 };
 
 const getActivityById = async (req, res, next) => {
@@ -22,10 +45,10 @@ const filterActivities = async (req, res, next) => {
       { "$match": { sport: sport } },
       { "$project": { "_id": 0 } }
     ])
-    
-    
-  return res.status(200).send(filterSport)
-  } 
+
+
+    return res.status(200).send(filterSport)
+  }
   catch (error) {
     res.status(400).send(error.message);
   }
@@ -44,10 +67,10 @@ const countActivities = async (req, res, next) => {
       { "$group": { "_id": "$sport", "count": { "$sum": 1 } } },
       { "$project": { "_id": 0 } }
     ])
-    
+
     if (countNumber.length > 0) {
       console.log(typeof countNumber[0].count.toString())
-       res.status(200).send(countNumber[0].count.toString());
+      res.status(200).send(countNumber[0].count.toString());
     } else {
       return res.status(200).send("0");
     }
