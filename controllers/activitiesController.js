@@ -20,10 +20,9 @@ const filterActivities = async (req, res, next) => {
     const filterSport = await Activities.aggregate([
       { "$match": { date_post: { $gte: date } } },
       { "$match": { sport: sport } },
-      // { "$group": { "_id": "$sport", "count": { "$sum": 1 } } },
       { "$project": { "_id": 0 } }
     ])
-    // aggregate([{ "$match": { date_post: { "$gte": 2022-08-19T04:36:35.011Z } } }])
+    
     
   return res.status(200).send(filterSport)
   } 
@@ -31,33 +30,13 @@ const filterActivities = async (req, res, next) => {
     res.status(400).send(error.message);
   }
 
-
-  // return res.send(req.activity);
 }
-
-// const countActivities = async (req, res, next) => {
-//   try {
-//     const sortActivity = await Activities.find({ type: req.param.sport }).sort({
-//       date_post: -1,
-//     });
-//     console.log("countActivities", sortActivity);
-//     res.status(200).json(sortActivity);
-//   } catch (error) {
-//     next(error);
-//   }
-
-// }
 
 const countActivities = async (req, res, next) => {
   const { sport } = req.params
   let date = new Date()
   date.setDate(date.getDate() - 1)
   console.log(date)
-  // const countNumber = await activitiesModels.aggregate([
-  //   ([{ "$match": { date: { "$gte": date } } },
-  //    { "$group": 
-  //    { "_id": "$sport", "count": { "$sum": 1 } } }])
-  // ]);
   try {
     const countNumber = await Activities.aggregate([
       { "$match": { date_post: { $gte: date } } },
@@ -65,7 +44,6 @@ const countActivities = async (req, res, next) => {
       { "$group": { "_id": "$sport", "count": { "$sum": 1 } } },
       { "$project": { "_id": 0 } }
     ])
-    // aggregate([{ "$match": { date_post: { "$gte": 2022-08-19T04:36:35.011Z } } }])
     
     if (countNumber.length > 0) {
       console.log(typeof countNumber[0].count.toString())

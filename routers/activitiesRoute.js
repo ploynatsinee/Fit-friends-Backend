@@ -24,7 +24,7 @@ activityRoutes.get("/", activitiesController.getAllActivities);
 
 
 //show activity community??? /activity?date-time 
-activityRoutes.get("/activity?date-time", activitiesController.getAllActivities);
+// activityRoutes.get("/activity?date-time", activitiesController.getAllActivities);
 
 //filter show activity community??? /activity?running&date-time
 activityRoutes.get("/activity/:sport", activitiesController.filterActivities);
