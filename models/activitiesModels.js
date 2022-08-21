@@ -7,6 +7,9 @@ const activitiesSchema = new mongoose.Schema({
   username_id: {
     type: String,
   },
+  user_photo: {
+    type: String,
+  },
   sport: {
     required: true,
     // enum: ['running','Jogging','Swimming','Yoga','Aerobic','Strength','Other'],
