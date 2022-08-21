@@ -23,7 +23,15 @@ const getUserById = async (req, res, next) => {
   res.send(user);
 };
 
+const getUserAll = async (req, res, next) => {
+  console.log("Hello")
+  const users = await User.find()
+  console.log(users)
+  res.send(users.map((users)=> users.toJSON()))
+};
+
 module.exports = {
   createUser,
   getUserById,
+  getUserAll,
 };

@@ -1,14 +1,20 @@
 const express = require("express");
 const app = express();
-
+const cors = require('cors');
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 require("dotenv").config();
 
-const mongoose = require("mongoose");
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+};
+app.use(cors(corsOptions))
+
 
 app.use(async (req, res, next) => {
   try {

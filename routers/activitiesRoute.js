@@ -27,7 +27,7 @@ activityRoutes.get("/", activitiesController.getAllActivities);
 activityRoutes.get("/activity?date-time", activitiesController.getAllActivities);
 
 //filter show activity community??? /activity?running&date-time
-activityRoutes.get("/activity?sport&date-time", activitiesController.filterActivities);
+activityRoutes.get("/activity/:sport", activitiesController.filterActivities);
 
 // //for notification aggergate (count) /activity_types/running/count
 activityRoutes.get("/activity_types/:sport", activitiesController.countActivities)

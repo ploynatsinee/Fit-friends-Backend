@@ -1,11 +1,9 @@
 const Activities = require("../models/activitiesModels");
-
+const User = require("../models/userModels");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllActivities = async (req, res, next) => {
-  const activities = await Activities.find({
-    // user_id: "291e7fa0-6c5b-4568-b570-3a71df030b1d",
-  });
+  const activities = await Activities.find({});
   res.send(activities);
 };
 
@@ -13,36 +11,73 @@ const getActivityById = async (req, res, next) => {
   res.send(req.activity);
 };
 
-const User = require("../models/userModels");
-const activitiesModels = require("../models/activitiesModels");
-
 //add filter and count
 const filterActivities = async (req, res, next) => {
-  // let date = new Date()
-  // date.setDate(date.getDate() - 10)
-  // const filterSidebar = await activitiesModels.aggregate([
-  //   ([{ date: { "$eq": date } }] )
-  // ]);
-  
-  // res.send(filterSidebar);
-  // const isToday = (someDate) => {
-  //   const today = new Date()
-  //   return someDate.getDate() == today.getDate()
-  // }
-  // if(isToday) {
+  const { sport } = req.params
+  let date = new Date()
+  date.setDate(date.getDate() - 1)
+  try {
+    const filterSport = await Activities.aggregate([
+      { "$match": { date_post: { $gte: date } } },
+      { "$match": { sport: sport } },
+      // { "$group": { "_id": "$sport", "count": { "$sum": 1 } } },
+      { "$project": { "_id": 0 } }
+    ])
+    // aggregate([{ "$match": { date_post: { "$gte": 2022-08-19T04:36:35.011Z } } }])
     
-  // }
-  return res.send(req.activity);
-} 
+  return res.status(200).send(filterSport)
+  } 
+  catch (error) {
+    res.status(400).send(error.message);
+  }
 
+
+  // return res.send(req.activity);
+}
+
+// const countActivities = async (req, res, next) => {
+//   try {
+//     const sortActivity = await Activities.find({ type: req.param.sport }).sort({
+//       date_post: -1,
+//     });
+//     console.log("countActivities", sortActivity);
+//     res.status(200).json(sortActivity);
+//   } catch (error) {
+//     next(error);
+//   }
+
+// }
 
 const countActivities = async (req, res, next) => {
+  const { sport } = req.params
   let date = new Date()
-  date.setDate(date.getDate() - 10)
-  const countNumber = await activitiesModels.aggregate([
-    ([{ "$match": { date: { "$gte": date } } }, { "$group": { "_id": "$sport", "count": { "$sum": 1 } } }])
-  ]);
-  res.send(countNumber);
+  date.setDate(date.getDate() - 1)
+  console.log(date)
+  // const countNumber = await activitiesModels.aggregate([
+  //   ([{ "$match": { date: { "$gte": date } } },
+  //    { "$group": 
+  //    { "_id": "$sport", "count": { "$sum": 1 } } }])
+  // ]);
+  try {
+    const countNumber = await Activities.aggregate([
+      { "$match": { date_post: { $gte: date } } },
+      { "$match": { sport: sport } },
+      { "$group": { "_id": "$sport", "count": { "$sum": 1 } } },
+      { "$project": { "_id": 0 } }
+    ])
+    // aggregate([{ "$match": { date_post: { "$gte": 2022-08-19T04:36:35.011Z } } }])
+    
+    if (countNumber.length > 0) {
+      console.log(typeof countNumber[0].count.toString())
+       res.status(200).send(countNumber[0].count.toString());
+    } else {
+      return res.status(200).send("0");
+    }
+
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+
 }
 
 const createActivity = async (req, res, next) => {
