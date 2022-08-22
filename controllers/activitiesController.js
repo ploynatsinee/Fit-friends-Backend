@@ -7,7 +7,7 @@ const getAllActivities = async (req, res, next) => {
   const dayPicker = req.query.date
   console.log(dayPicker)
   if (dayPicker === undefined) {console.log("ä")
-    const activities = await Activities.find({});
+    const activities = await Activities.find({}).sort({date_post: -1});
     res.send(activities);
     
   } else {
@@ -24,7 +24,7 @@ const getAllActivities = async (req, res, next) => {
             { $lt: (dateEnd) }
         },
         { "date_post": { $gt: (dateStart) } }]
-    });
+    }).sort({date_post: -1});
     res.send(activities);
 
   }
