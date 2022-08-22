@@ -1,19 +1,85 @@
 const Activities = require("../models/activitiesModels");
-
+const User = require("../models/userModels");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllActivities = async (req, res, next) => {
-  const activities = await Activities.find({
-    user_id: "291e7fa0-6c5b-4568-b570-3a71df030b1d",
-  });
-  res.send(activities);
+  console.log(req.query)
+  const dayPicker = req.query.date
+  console.log(dayPicker)
+  if (dayPicker === undefined) {
+    const activities = await Activities.find({});
+    res.send(activities);
+    
+  } else {
+    var dateEnd = new Date(dayPicker)
+    dateEnd.setHours(30, 59, 59)
+    console.log(dateEnd)
+    var dateStart = new Date(dayPicker)
+    console.log(dateStart)
+    const activities = await Activities.find({
+      $and:
+        [{
+          "date_post":
+            { $lt: (dateEnd) }
+        },
+        { "date_post": { $gt: (dateStart) } }]
+    });
+    res.send(activities);
+
+  }
+
 };
 
 const getActivityById = async (req, res, next) => {
   res.send(req.activity);
 };
 
-const User = require("../models/userModels");
+//add filter and count
+const filterActivities = async (req, res, next) => {
+  const { sport } = req.params
+  let date = new Date()
+  date.setDate(date.getDate() - 1)
+  try {
+    const filterSport = await Activities.aggregate([
+      { "$match": { date_post: { $gte: date } } },
+      { "$match": { sport: sport } },
+      { "$project": { "_id": 0 } }
+    ])
+
+
+    return res.status(200).send(filterSport)
+  }
+  catch (error) {
+    res.status(400).send(error.message);
+  }
+
+}
+
+const countActivities = async (req, res, next) => {
+  const { sport } = req.params
+  let date = new Date()
+  date.setDate(date.getDate() - 1)
+  console.log(date)
+  try {
+    const countNumber = await Activities.aggregate([
+      { "$match": { date_post: { $gte: date } } },
+      { "$match": { sport: sport } },
+      { "$group": { "_id": "$sport", "count": { "$sum": 1 } } },
+      { "$project": { "_id": 0 } }
+    ])
+
+    if (countNumber.length > 0) {
+      console.log(typeof countNumber[0].count.toString())
+      res.status(200).send(countNumber[0].count.toString());
+    } else {
+      return res.status(200).send("0");
+    }
+
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+
+}
 
 const createActivity = async (req, res, next) => {
   const user = await User.findOne({
@@ -34,12 +100,12 @@ const createActivity = async (req, res, next) => {
 };
 
 const editActivityById = async (req, res, next) => {
-  const { comment, activity_type, date, duration } = req.body;
+  const { captions, sport, date, location } = req.body;
 
-  if (comment) req.activity.comment = comment;
-  if (activity_type) req.activity.activity_type = activity_type;
+  if (captions) req.activity.captions = captions;
+  if (sport) req.activity.sport = sport;
   if (date) req.activity.date = date;
-  if (duration) req.activity.duration = duration;
+  if (location) req.activity.location = location;
 
   await req.activity.save();
 
@@ -58,4 +124,6 @@ module.exports = {
   createActivity,
   editActivityById,
   removeActivityById,
+  filterActivities,
+  countActivities,
 };
