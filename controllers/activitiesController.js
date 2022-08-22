@@ -6,7 +6,7 @@ const getAllActivities = async (req, res, next) => {
   console.log(req.query)
   const dayPicker = req.query.date
   console.log(dayPicker)
-  if (dayPicker === undefined) {
+  if (dayPicker === undefined) {console.log("ä")
     const activities = await Activities.find({});
     res.send(activities);
     
@@ -16,6 +16,7 @@ const getAllActivities = async (req, res, next) => {
     console.log(dateEnd)
     var dateStart = new Date(dayPicker)
     console.log(dateStart)
+    console.log("b")
     const activities = await Activities.find({
       $and:
         [{
