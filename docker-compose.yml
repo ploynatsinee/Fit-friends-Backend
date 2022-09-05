@@ -1,0 +1,19 @@
+version: "3"
+services:
+       fitfriends:
+           container_name: fitfriends
+           image: latest123/login-app
+           restart: always
+           build: .
+           ports:
+            #  - "7500:7500"
+             - "7501:7501"
+           links:
+             - mongo
+       mongo:
+             container_name: mongo
+             image: mongo
+             volumes:
+               - ./data:/data/db
+             ports:
+               - '27018:27017'
