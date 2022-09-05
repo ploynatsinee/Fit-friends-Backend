@@ -7,7 +7,7 @@ services:
            build: .
            ports:
             #  - "7500:7500"
-             - "7501:7501"
+             - "3000:3000"
            links:
              - mongo
        mongo:
