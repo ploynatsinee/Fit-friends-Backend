@@ -20,5 +20,9 @@ services:
                - ./data:/data/db
              ports:
                - '27018:27017'
+             environment:
+              MONGO_INITDB_ROOT_USERNAME: natsinee
+              MONGO_INITDB_ROOT_PASSWORD: natsineedev
+              MONGO_INITDB_DATABASE: test
       
               
