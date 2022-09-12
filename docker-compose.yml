@@ -25,6 +25,7 @@ services:
                MONGO_INITDB_ROOT_PASSWORD: natsineedev
                MONGO_INITDB_DATABASE: test
 
+
 # version: "3"
 # services:
 #        fitfriends:

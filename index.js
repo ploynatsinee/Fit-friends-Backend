@@ -26,7 +26,7 @@ app.use(async (req, res, next) => {
   }
 });
 
-//activities
+//activity
 const activityRoutes = require("./routers/activitiesRoute");
 app.use("/activities", activityRoutes);
 
