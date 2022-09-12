@@ -8,8 +8,7 @@ services:
            ports:
              - "3000:3000"
            environment:
-             MONGO_DB_URI: mongodb://natsinee:natsineedev@mongo/test
-            # MONGO_DB_URI: mongodb+srv://natsinee:natsineedev@fitfriends.2vcyxwf.mongodb.net/test
+             MONGO_DB_URI: mongodb://fit123:fit12345@mongo/test
            links:
              - mongo
        mongo:
@@ -19,10 +18,10 @@ services:
              volumes:
                - ./data:/data/db
              ports:
-               - '27018:27017'
+               - '27017:27017'
              environment:
-              MONGO_INITDB_ROOT_USERNAME: natsinee
-              MONGO_INITDB_ROOT_PASSWORD: natsineedev
+              MONGO_INITDB_ROOT_USERNAME: fit123
+              MONGO_INITDB_ROOT_PASSWORD: fit12345
               MONGO_INITDB_DATABASE: test
       
               
