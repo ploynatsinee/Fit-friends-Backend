@@ -20,35 +20,5 @@ services:
                - ./data:/data/db
              ports:
                - '27018:27017'
-             environment:
-               MONGO_INITDB_ROOT_USERNAME: natsinee
-               MONGO_INITDB_ROOT_PASSWORD: natsineedev
-               MONGO_INITDB_DATABASE: test
-
-
-# version: "3"
-# services:
-#        fitfriends:
-#            container_name: fitfriends
-#            image: latest123/login-app
-#            restart: always
-#            build: .
-#            ports:
-#             #  - "7500:7500"
-#              - "3000:3000"
-#            environment:
-#              MONGO_DB_URI: mongodb://root:chooXai6cief@mongo/test
-#            links:
-#              - mongo
-#        mongo:
-#              container_name: mongo3
-#              image: mongo
-#              user: 1000:1000
-#              volumes:
-#                - ./data:/data/db
-#              ports:
-#                - '27018:27017'
-#              environment:
-#                MONGO_INITDB_ROOT_USERNAME: root
-#                MONGO_INITDB_ROOT_PASSWORD: chooXai6cief
-#                MONGO_INITDB_DATABASE: test
+      
+              
