@@ -8,9 +8,13 @@ services:
            ports:
              - "3000:3000"
            environment:
-             MONGO_DB_URI: mongodb://fit123:fit12345@mongo/test
+             MONGO_DB_URI: mongodb://natsinee:natsineedev@mongo/test?authSource=admin
+           env_file:
+             - .env
            links:
              - mongo
+          #  mongo-database:
+          #   container_name: mongofit
        mongo:
              container_name: mongofit
              image: mongo
@@ -20,8 +24,10 @@ services:
              ports:
                - '27017:27017'
              environment:
-              MONGO_INITDB_ROOT_USERNAME: fit123
-              MONGO_INITDB_ROOT_PASSWORD: fit12345
+              MONGO_INITDB_ROOT_USERNAME: natsinee
+              MONGO_INITDB_ROOT_PASSWORD: natsineedev
               MONGO_INITDB_DATABASE: test
+             env_file:
+             - .env
       
               

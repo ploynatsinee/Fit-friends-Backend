@@ -2,8 +2,7 @@ require("dotenv").config();
 
 const config = {
     mongo: {
-        username: process.env.MONGO_USERNAME,
-        password: process.env.MONGO_PASSWORD,
+        MONGO_DB_URI: process.env.MONGO_DB_URI,
     }
 }
 
