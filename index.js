@@ -19,13 +19,13 @@ app.use(cors(corsOptions))
 app.use(async (req, res, next) => {
   try {
     await mongoose.connect(process.env.MONGO_DB_URI, {
-      auth: {
-      user: 'natsinee',
-      password: 'natsineedev'
-    },
-      authSource: "admin",
-      useUnifiedTopology: true,
-      useNewUrlParser: true
+      // user: 'natsinee',
+      // password: 'natsineedev',
+      // authSource: "admin",
+      // useUnifiedTopology: true,
+      // useCreateIndex: true,
+      // useNewUrlParser: true,
+      // useFindAndModify: false
 });
 console.log("Database is connected")
 next();

@@ -8,7 +8,7 @@ services:
            ports:
              - "3000:3000"
            environment:
-             MONGO_DB_URI: mongodb://natsinee:natsineedev@mongo/test?authSource=admin
+             MONGO_DB_URI: mongodb://natsinee:natsineedev@mongofit/test?authSource=admin
            env_file:
              - .env
            links:
@@ -22,7 +22,7 @@ services:
              volumes:
                - ./data:/data/db
              ports:
-               - '27017:27017'
+               - '37017:27017'
              environment:
               MONGO_INITDB_ROOT_USERNAME: natsinee
               MONGO_INITDB_ROOT_PASSWORD: natsineedev
